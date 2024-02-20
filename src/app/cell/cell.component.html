@@ -1,2 +1,2 @@
-<div class="cell" [attr.coordinates]="this.coordinates" [style.backgroundColor]="this.backgroundColor" (click)="turnGreen()">
+<div class="cell" [attr.coordinates]="this.coordinates" [style.backgroundColor]="this.backgroundColor" (click)="activeCell === this.coordinates ? turnGreen() : ''">
 </div>

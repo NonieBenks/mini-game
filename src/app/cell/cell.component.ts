@@ -10,8 +10,9 @@ import { Component, Input } from '@angular/core';
 export class CellComponent {
   public backgroundColor: string = '#9AC4F8';
   @Input() coordinates: string = '';
+  @Input() activeCell: string = '';
+
   turnGreen() {
-    // console.log(this.coordinates);
     this.backgroundColor = '#8AEA92';
   }
 }
