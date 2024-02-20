@@ -1,19 +1,19 @@
 <div class="count-container">
-    <h3>Count</h3>
-    <p>Player: {{this.playerCount}} / Computer: {{this.computerCount}}</p>
+    <h3>Рахунок</h3>
+    <p>Гравець: {{this.playerCount}} : {{this.computerCount}} Комп'ютер</p>
 </div>
 <div class="container"> 
     <div class="field-container">
         @for (column of columns; let columnIndex = $index; track columnIndex) {
             <div class="column">
                 @for (row of rows; let rowIndex = $index; track rowIndex) {
-                    <app-cell [coordinates]="rowIndex+'-'+columnIndex"></app-cell>
+                    <app-cell [coordinates]="rowIndex+'-'+columnIndex" [activeCell]="this.activeCell"></app-cell>
                 }
             </div>
         }
     </div>
     <mat-form-field class="controls-container">
-        <mat-label>Amount of time</mat-label>
+        <mat-label>Інтервал(мc)</mat-label>
         <input matInput type="number" name="time" [(ngModel)]="amountOfTime">
     </mat-form-field>
     <button mat-stroked-button (click)="startGame(amountOfTime)">Почати</button>

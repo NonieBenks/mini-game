@@ -1,1 +1,9 @@
-<p>modal works!</p>
+<div class="container">
+    <mat-dialog-content>
+      <h3>{{ data.name }} переміг!</h3>
+       <p>{{ data.results }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="startOver()">Почати заново</button>
+    </mat-dialog-actions>
+</div>
