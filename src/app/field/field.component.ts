@@ -3,7 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+
 import { finalize, map, take, tap, timer } from 'rxjs';
+
 import { CellComponent } from '../cell/cell.component';
 import { ModalComponent } from '../modal/modal.component';
 
@@ -15,20 +17,16 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrl: './field.component.scss',
 })
 export class FieldComponent {
-  pickedCellsCoordinates: string[] = [];
   columns = Array.from({ length: 10 });
   rows = Array.from({ length: 10 });
   computerSteps: Array<string> = [];
-  generatedCoordinates = '';
-  movesInterval: any;
-  movesTimeout: any;
-  nameOfTheWinner: string = '';
-  results: string = '';
-  activeCell = '';
 
-  amountOfTime = 0;
-  playerCount = 0;
-  computerCount = 0;
+  nameOfTheWinner: string = '';
+  activeCell: string = '';
+  results: string = '';
+  amountOfTime: number = 0;
+  playerCount: number = 0;
+  computerCount: number = 0;
 
   constructor(private elementRef: ElementRef, public dialog: MatDialog) {}
 
@@ -41,11 +39,11 @@ export class FieldComponent {
       .pipe(
         take(this.computerSteps.length),
         map((index) => this.computerSteps[index]),
-        tap((item) => {
+        tap((currentCoordinates) => {
           const pickedCell = this.elementRef.nativeElement.querySelector(
-            `[coordinates = "${item}"]`
+            `[coordinates = "${currentCoordinates}"]`
           );
-          this.activeCell = item;
+          this.activeCell = currentCoordinates;
           this.pickCell(pickedCell, this.amountOfTime);
         }),
         finalize(() => {
@@ -57,17 +55,7 @@ export class FieldComponent {
           }, amountOfTime);
         })
       )
-      .subscribe({
-        next(value) {
-          console.log(value);
-        },
-        error(error) {
-          console.log(error);
-        },
-        complete() {
-          console.log('Done!');
-        },
-      });
+      .subscribe();
   }
 
   pickCell(cell: HTMLElement, amountOfTime: number) {
@@ -90,16 +78,12 @@ export class FieldComponent {
 
   generateComputerMovesArray() {
     while (this.computerSteps.length < 10) {
-      let newValue = this.generateCoordinates();
-      if (!this.computerSteps.includes(newValue)) {
-        this.computerSteps.push(newValue);
+      let generatedValue =
+        Math.floor(Math.random() * 10) + '-' + Math.floor(Math.random() * 10);
+      if (!this.computerSteps.includes(generatedValue)) {
+        this.computerSteps.push(generatedValue);
       }
     }
-  }
-  generateCoordinates(): string {
-    return (
-      Math.floor(Math.random() * 10) + '-' + Math.floor(Math.random() * 10)
-    );
   }
 
   openDialog(): void {
